@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agendamento de Visita Porto Seguro</title>
+<style>
+  :root {
+    --azul-ps: #00468b;
+    --azul-claro: #0074e8;
+    --verde-ps: #2ca01c;
+    --cinza-claro: #f5f7fa;
+    --cinza-escuro: #555;
+  }
+  body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--cinza-claro);
+    margin: 0; padding: 0;
+  }
+  .container {
+    max-width: 480px;
+    background: white;
+    margin: 40px auto;
+    padding: 30px 40px 40px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgb(0 0 0 / 0.1);
+  }
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  header img {
+    max-width: 180px;
+    margin-bottom: 10px;
+  }
+  header h1 {
+    color: var(--azul-ps);
+    font-weight: 700;
+    margin: 0;
+  }
+  label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: var(--azul-ps);
+  }
+  select, input[type="text"], input[type="date"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 6px;
+    border-radius: 6px;
+    border: 1.8px solid var(--azul-ps);
+    font-size: 1rem;
+    color: var(--cinza-escuro);
+    box-sizing: border-box;
+  }
+  .checkbox-group {
+    margin-top: 10px;
+  }
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    font-weight: 500;
+    color: var(--azul-ps);
+    cursor: pointer;
+  }
+  .checkbox-group input[type="checkbox"] {
+    margin-right: 12px;
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+  button {
+    margin-top: 30px;
+    background-color: var(--azul-ps);
+    color: white;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 1.1rem;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: var(--azul-claro);
+  }
+  .error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
+  #confirmacao {
+    text-align: center;
+    padding: 20px;
+    display: none;
+  }
+  #confirmacao img {
+    width: 120px;
+    margin-bottom: 20px;
+  }
+  #confirmacao h2 {
+    color: var(--verde-ps);
+    margin-bottom: 10px;
+  }
+  #confirmacao p {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+  #dadosConfirmacao {
+    text-align: left;
+    max-width: 400px;
+    margin: 0 auto;
+    color: var(--cinza-escuro);
+    font-weight: 500;
+  }
+  #dadosConfirmacao strong {
+    color: var(--azul-ps);
+  }
+</style>
+</head>
+<body>
+  <div class="container" id="form-container">
+    <header>
+      <img src="https://www.portoseguro.com.br/portal/portal/themes/portoseguro/images/logo.svg" alt="Porto Seguro Logo" />
+      <h1>Agendamento de Visita Porto Seguro</h1>
+    </header>
+    <form id="formAgendamento" onsubmit="return enviarFormulario(event)">
+      <label for="loja">Loja da Compra:</label>
+      <select id="loja" name="loja" required>
+        <option value="">Selecione a loja</option>
+        <option value="Casas Bahia">Casas Bahia</option>
+        <option value="Carrefour">Carrefour</option>
+        <option value="Ponto Frio">Ponto Frio</option>
+        <option value="Nagem">Nagem</option>
+        <option value="Kalunga">Kalunga</option>
+        <option value="Barboza">Barboza</option>
+      </select>
+      <span class="error-message" id="error-certificado" style="display:none;">O certificado deve conter 12 números.</span>
+      <label for="certificado">Número do Certificado:</label>
+      <input type="text" id="certificado" name="certificado" minlength="12" maxlength="12" required pattern="\d{12}" title="Digite exatamente 12 números" />
+
+      <label for="nome_cliente">Nome do Cliente:</label>
+      <input type="text" id="nome_cliente" name="nome_cliente" required />
+
+      <label for="produto">Produto:</label>
+      <input type="text" id="produto" name="produto" />
+
+      <label for="endereco">Endereço:</label>
+      <input type="text" id="endereco" name="endereco" required />
+
+      <label for="data_visita">Data da Visita:</label>
+      <input type="date" id="data_visita" name="data_visita" required min="" />
+
+      <label>Período:</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="periodo[]" value="Manhã"> Manhã (8:00 até 12:00)</label>
+        <label><input type="checkbox" name="periodo[]" value="Tarde"> Tarde (13:00 até 18:00)</label>
+        <label><input type="checkbox" name="periodo[]" value="Comercial"> Comercial (8:00 até 18:00)</label>
+      </div>
+
+      <button type="submit">Agendar</button>
+    </form>
+  </div>
+
+  <div class="container" id="confirmacao">
+    <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Confirmação" />
+    <h2>Agendamento Confirmado!</h2>
+    <p>Obrigado pela preferência.</p>
+    <div id="dadosConfirmacao"></div>
+  </div>
+
+<script>
+  // Definir data mínima hoje para o input date
+  document.addEventListener('DOMContentLoaded', () => {
+    const dataInput = document.getElementById('data_visita');
+    const hoje = new Date().toISOString().split('T')[0];
+    dataInput.setAttribute('min', hoje);
+  });
+
+  // Validação extra para certificado (12 números)
+  const certificadoInput = document.getElementById('certificado');
+  certificadoInput.addEventListener('input', () => {
+    const erroCert = document.getElementById('error-certificado');
+    const valor = certificadoInput.value;
+    const valido = /^\d{12}$/.test(valor);
+    if (!valido) {
+      erroCert.style.display = 'block';
+      certificadoInput.setCustomValidity("O certificado deve conter exatamente 12 números.");
+    } else {
+      erroCert.style.display = 'none';
+      certificadoInput.setCustomValidity('');
+    }
+  });
+
+  function enviarFormulario(e) {
+    e.preventDefault();
+
+    // Verifica se pelo menos 1 período foi selecionado
+    const checkboxes = document.querySelectorAll('input[name="periodo[]"]:checked');
+    if (checkboxes.length === 0) {
+      alert('Por favor, selecione pelo menos um período.');
+      return false;
+    }
+
+    const form = document.getElementById('formAgendamento');
+    const data = new FormData(form);
+
+    fetch('https://script.google.com/a/macros/portoseguro.com.br/s/AKfycbw4IJNyH41Orpei1Sgs5YQoooHuz_Jl_qtTd0FIVzlunGGs-cMcF56k8-XRM0gUSYPQ/exec', {
+      method: 'POST',
+      body: data
+    })
+    .then(response => response.text())
+    .then(text => {
+      if (text.toLowerCase().includes('sucesso')) {
+        document.getElementById('form-container').style.display = 'none';
+        const confirmacao = document.getElementById('confirmacao');
+        confirmacao.style.display = 'block';
+
+        // Mostrar dados do agendamento
+        const periodos = Array.from(checkboxes).map(cb => cb.value).join(', ');
+        document.getElementById('dadosConfirmacao').innerHTML = `
+          <strong>Loja:</strong> ${data.get('loja')}<br>
+          <strong>Certificado:</strong> ${data.get('certificado')}<br>
+          <strong>Cliente:</strong> ${data.get('nome_cliente')}<br>
+          <strong>Produto:</strong> ${data.get('produto') || 'Não informado'}<br>
+          <strong>Endereço:</strong> ${data.get('endereco')}<br>
+          <strong>Data da Visita:</strong> ${data.get('data_visita')}<br>
+          <strong>Período(s):</strong> ${periodos}
+        `;
+      } else {
+        alert('Erro no agendamento: ' + text);
+      }
+    })
+    .catch(() => {
+      alert('Erro ao enviar formulário. Verifique sua conexão e tente novamente.');
+    });
+
+    return false;
+  }
+</script>
+</body>
+</html>
