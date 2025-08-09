@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Agendamento de Visita Porto Seguro</title>
+</head>
+<body>
+<h2>Agendamento de Visita Porto Seguro</h2>
+
+<form action="https://script.google.com/a/macros/portoseguro.com.br/s/AKfycbwN6rEDH_xxNnWtaYK0KYpP4uWxnSNjUONa9mgLkAQItID13qnvPFML6azNtUkUo8ycAg/exec" method="post">
+    <label for="loja">Loja da Compra:</label><br>
+    <select id="loja" name="loja" required>
+        <option value="">Selecione a Loja</option>
+        <option value="casas_bahia">Casas Bahia</option>
+        <option value="ponto_frio">Ponto Frio</option>
+        <option value="carrefour">Carrefour</option>
+        <option value="angeloni">Angeloni</option>
+        <option value="nagem">Nagem</option>
+    </select><br><br>
+
+    <label for="certificado">Número do Certificado:</label><br>
+    <input type="text" id="certificado" name="certificado" minlength="12" required><br><br>
+
+    <label for="nome_cliente">Nome do Cliente:</label><br>
+    <input type="text" id="nome_cliente" name="nome_cliente" required><br><br>
+
+    <label for="produto">Produto:</label><br>
+    <input type="text" id="produto" name="produto"><br><br>
+
+    <label for="endereco">Endereço:</label><br>
+    <input type="text" id="endereco" name="endereco" required><br><br>
+
+    <label for="data_visita">Data da Visita:</label><br>
+    <input type="date" id="data_visita" name="data_visita" required><br><br>
+
+    <label>Período:</label><br>
+    <input type="checkbox" id="periodo_manha" name="periodo[]" value="manha">
+    <label for="periodo_manha">Manhã (8:00 até 12:00)</label><br>
+    <input type="checkbox" id="periodo_tarde" name="periodo[]" value="tarde">
+    <label for="periodo_tarde">Tarde (13:00 até 18:00)</label><br>
+    <input type="checkbox" id="periodo_comercial" name="periodo[]" value="comercial">
+    <label for="periodo_comercial">Comercial (8:00 até 18:00)</label><br><br>
+
+    <input type="submit" value="Agendar">
+</form>
+
+</body>
+</html>
